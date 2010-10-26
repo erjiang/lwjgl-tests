@@ -31,6 +31,8 @@ public class Lwjgl1 {
 
 	public static void initGfx() throws LWJGLException {
 		
+		// below copied from Prototyp http://www.fabiensanglard.net/Prototyp/index.php
+		
 		Display.setDisplayMode(new DisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT));
 		Display.create();
 		
@@ -44,8 +46,8 @@ public class Lwjgl1 {
 		GL11.glMatrixMode(GL11.GL_PROJECTION); // Select The Projection Matrix
 		GL11.glLoadIdentity(); // Reset The Projection Matrix
 
-		GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2,
-				(int) -SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
+		//GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2,
+		//		(int) -SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
 
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
