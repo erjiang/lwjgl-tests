@@ -10,6 +10,7 @@ public class Lwjgl1 {
 	static public final int SCREEN_WIDTH = 800;
 	static public final int SCREEN_HEIGHT = 600; // 480
 	private static final boolean FULL_SCREEN = false;
+	static int MOVE_DELTA = 0;
 
 	/**
 	 * @param args
@@ -26,10 +27,11 @@ public class Lwjgl1 {
 			System.out.println("Could not make gfx :(");
 			e.printStackTrace();
 		}
-
 		for(;;) {
-			render();
-			Display.update();
+			for(MOVE_DELTA = 0; MOVE_DELTA < 100; MOVE_DELTA ++) {
+				render();
+				Display.update();
+			}
 		}
 	}
 
@@ -74,7 +76,7 @@ public class Lwjgl1 {
 			GL11.glVertex3f(0.0f, 0.0f, 0.0f);
 			GL11.glVertex3f(1.0f, 0.0f, 0.0f);
 		GL11.glEnd();
-		GL11.glTranslatef(3.0f, 0.0f, 0.0f);
+		GL11.glTranslatef(2.0f + ((float) MOVE_DELTA * 0.01f), 0.0f, 0.0f);
 		GL11.glBegin(GL11.GL_QUADS);
 			GL11.glVertex3f(0.0f, 1.5f, 0.0f);
 			GL11.glVertex3f(0.0f, 0.0f, 0.0f);
