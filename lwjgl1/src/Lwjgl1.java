@@ -27,16 +27,9 @@ public class Lwjgl1 {
 			e.printStackTrace();
 		}
 
-		
-		// wait for close
-		for (;;) {
+		for(;;) {
 			render();
-			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-				break;
-			}
-			if (Display.isCloseRequested()) { // Exit if window is closed
-				break;
-			}
+			Display.update();
 		}
 	}
 
@@ -48,15 +41,22 @@ public class Lwjgl1 {
 		Display.create();
 		
 		GL11.glEnable(GL11.GL_TEXTURE_2D); // Enable Texture Mapping
+		GL11.glShadeModel(GL11.GL_SMOOTH);
 
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
 		GL11.glClearDepth(1.0f); // Depth Buffer Setup
 		GL11.glDisable(GL11.GL_DEPTH_TEST); // Enables Depth Testing
 		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glDepthMask(false);
+		//GL11.glDepthMask(false);
 		GL11.glMatrixMode(GL11.GL_PROJECTION); // Select The Projection Matrix
 		GL11.glLoadIdentity(); // Reset The Projection Matrix
 
+        GLU.gluPerspective(
+                45.0f,
+                (float) SCREEN_WIDTH / (float) SCREEN_HEIGHT,
+                0.1f,
+                100.0f);
+		
 		//GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2,
 		//		(int) -SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
 
@@ -66,7 +66,9 @@ public class Lwjgl1 {
 	
 	public static void render() {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glTranslatef(-2.0f, 0.0f, 0.0f);
+		GL11.glLoadIdentity();
+		// move back into the screen so we can see stuff
+		GL11.glTranslatef(-2.0f, 0.0f, -6.0f);
 		GL11.glBegin(GL11.GL_TRIANGLES);
 			GL11.glVertex3f(0.0f, 1.5f, 0.0f);
 			GL11.glVertex3f(0.0f, 0.0f, 0.0f);
