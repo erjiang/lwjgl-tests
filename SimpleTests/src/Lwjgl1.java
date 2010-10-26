@@ -20,6 +20,7 @@ public class Lwjgl1 {
 		// TODO Auto-generated method stub
 		Timer time = new Timer();
 		
+		float fpstick = 1.0f / 60.0f;
 
 		try {
 			initGfx();
@@ -30,15 +31,25 @@ public class Lwjgl1 {
 		}
 		
 		float lastTime;
+		float now = time.getTime();
+		float timeDelta;
 		for(;;) {
 			
-			for(MOVE_DELTA = 0.0f; MOVE_DELTA < 1.0f;
-				MOVE_DELTA += (time.getTime() - lastTime)) {
-				lastTime = time.getTime();
+			for(MOVE_DELTA = 0.0f; MOVE_DELTA < 1.0f;) {
+				
+				lastTime = now;
+				time.tick();
+				now = time.getTime();
+				timeDelta = now - lastTime;
+				MOVE_DELTA += timeDelta;
+				
 				render();
 				Display.update();
-				time.tick();
-				Thread.sleep(10);
+				
+				if(fpstick - timeDelta > 0) {
+					Thread.sleep((long) ((fpstick - timeDelta) * 1000));
+				}
+				
 			}
 		}
 	}
