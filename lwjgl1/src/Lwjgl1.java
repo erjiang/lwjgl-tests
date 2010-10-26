@@ -1,4 +1,5 @@
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -25,8 +26,18 @@ public class Lwjgl1 {
 			System.out.println("Could not make gfx :(");
 			e.printStackTrace();
 		}
+
 		
-		Thread.sleep(1000);
+		// wait for close
+		for (;;) {
+			render();
+			if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+				break;
+			}
+			if (Display.isCloseRequested()) { // Exit if window is closed
+				break;
+			}
+		}
 	}
 
 	public static void initGfx() throws LWJGLException {
@@ -51,5 +62,22 @@ public class Lwjgl1 {
 
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
+	}
+	
+	public static void render() {
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		GL11.glTranslatef(-2.0f, 0.0f, 0.0f);
+		GL11.glBegin(GL11.GL_TRIANGLES);
+			GL11.glVertex3f(0.0f, 1.5f, 0.0f);
+			GL11.glVertex3f(0.0f, 0.0f, 0.0f);
+			GL11.glVertex3f(1.0f, 0.0f, 0.0f);
+		GL11.glEnd();
+		GL11.glTranslatef(3.0f, 0.0f, 0.0f);
+		GL11.glBegin(GL11.GL_QUADS);
+			GL11.glVertex3f(0.0f, 1.5f, 0.0f);
+			GL11.glVertex3f(0.0f, 0.0f, 0.0f);
+			GL11.glVertex3f(1.0f, 0.0f, 0.0f);
+			GL11.glVertex3f(1.0f, 1.2f, 0.0f);
+		GL11.glEnd();
 	}
 }
