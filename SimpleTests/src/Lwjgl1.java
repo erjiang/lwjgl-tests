@@ -8,8 +8,7 @@ import org.lwjgl.util.glu.GLU;
 
 public class Lwjgl1 {
 	static public final int SCREEN_WIDTH = 800;
-	static public final int SCREEN_HEIGHT = 600; // 480
-	private static final boolean FULL_SCREEN = false;
+	static public final int SCREEN_HEIGHT = 600;
 	static float MOVE_DELTA = 0;
 
 	/**
@@ -38,7 +37,7 @@ public class Lwjgl1 {
 			for(MOVE_DELTA = 0.0f; MOVE_DELTA < 1.0f;) {
 				
 				lastTime = now;
-				time.tick();
+				Timer.tick();
 				now = time.getTime();
 				timeDelta = now - lastTime;
 				MOVE_DELTA += timeDelta;
@@ -46,6 +45,7 @@ public class Lwjgl1 {
 				render();
 				Display.update();
 				
+				// sleep until next update
 				if(fpstick - timeDelta > 0) {
 					Thread.sleep((long) ((fpstick - timeDelta) * 1000));
 				}
@@ -89,7 +89,9 @@ public class Lwjgl1 {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glLoadIdentity();
 		// move back into the screen so we can see stuff
+		
 		GL11.glTranslatef(-2.0f, 0.0f, -6.0f);
+		GL11.glRotatef(MOVE_DELTA * 360f, 0.2f, 1.0f, 0);
 		GL11.glBegin(GL11.GL_TRIANGLES);
 			GL11.glVertex3f(0.0f, 1.5f, 0.0f);
 			GL11.glVertex3f(0.0f, 0.0f, 0.0f);
