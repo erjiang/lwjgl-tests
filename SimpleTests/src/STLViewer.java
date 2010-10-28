@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Timer;
 import org.lwjgl.util.glu.GLU;
 
-public class KeyboardQuit {
+public class STLViewer {
 	static public final int SCREEN_WIDTH = 800;
 	static public final int SCREEN_HEIGHT = 600;
 	static float MOVE_DELTA = 0;
@@ -34,8 +34,7 @@ public class KeyboardQuit {
 		float now = time.getTime();
 		float timeDelta;
 		float fiveSecsAgo = now;
-		float frames = 0;
-		
+		float frames = 0;	
         // loop forever
 		for(;;) {
 			
