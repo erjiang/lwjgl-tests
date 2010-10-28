@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Timer;
 import org.lwjgl.util.glu.GLU;
 
-public class SimpleAnimation {
+public class KeyboardQuit {
 	static public final int SCREEN_WIDTH = 800;
 	static public final int SCREEN_HEIGHT = 600;
 	static float MOVE_DELTA = 0;
@@ -14,8 +14,9 @@ public class SimpleAnimation {
 	/**
 	 * @param args
 	 * @throws InterruptedException
+	 * @throws LWJGLException 
 	 */
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, LWJGLException {
 		// TODO Auto-generated method stub
 		Timer time = new Timer();
 		
@@ -32,9 +33,21 @@ public class SimpleAnimation {
 		float lastTime;
 		float now = time.getTime();
 		float timeDelta;
+		
+		Keyboard.create();
+
+        // loop forever
 		for(;;) {
 			
 			for(MOVE_DELTA = 0.0f; MOVE_DELTA < 1.0f;) {
+                // check if we want to quit
+				Keyboard.poll();
+                if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_A)) {	   // Exit if Escape is pressed
+                    System.exit(0);
+                }
+                if(Display.isCloseRequested()) {
+                	System.exit(0);
+                }
 				
 				lastTime = now;
 				Timer.tick();
@@ -72,11 +85,11 @@ public class SimpleAnimation {
 		GL11.glMatrixMode(GL11.GL_PROJECTION); // Select The Projection Matrix
 		GL11.glLoadIdentity(); // Reset The Projection Matrix
 
-        GLU.gluPerspective(
-                45.0f,
-                (float) SCREEN_WIDTH / (float) SCREEN_HEIGHT,
-                0.1f,
-                100.0f);
+		GLU.gluPerspective(
+				45.0f,
+				(float) SCREEN_WIDTH / (float) SCREEN_HEIGHT,
+				0.1f,
+				100.0f);
 		
 		//GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2,
 		//		(int) -SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
