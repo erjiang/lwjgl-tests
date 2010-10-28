@@ -20,7 +20,7 @@ public class KeyboardQuit {
 		// TODO Auto-generated method stub
 		Timer time = new Timer();
 		
-		float fpstick = 1.0f / 60.0f;
+		float fpstick = 1.0f / 30.0f; // gives 60fps??
 
 		try {
 			initGfx();
@@ -33,11 +33,20 @@ public class KeyboardQuit {
 		float lastTime;
 		float now = time.getTime();
 		float timeDelta;
+		float fiveSecsAgo = now;
+		float frames = 0;
 		
 		Keyboard.create();
 
+		
         // loop forever
 		for(;;) {
+			
+			if(time.getTime() - fiveSecsAgo > 5f) {
+				System.out.println("FPS: "+((float)frames / 5.0f));
+				fiveSecsAgo = time.getTime();
+				frames = 0;
+			}
 			
 			for(MOVE_DELTA = 0.0f; MOVE_DELTA < 1.0f;) {
                 // check if we want to quit
@@ -54,12 +63,13 @@ public class KeyboardQuit {
 				now = time.getTime();
 				timeDelta = now - lastTime;
 				MOVE_DELTA += timeDelta;
+				frames++;
 				
 				render();
 				Display.update();
 				
 				// sleep until next update
-				if(fpstick - timeDelta > 0) {
+				if(fpstick - timeDelta > 0.005) {
 					Thread.sleep((long) ((fpstick - timeDelta) * 1000));
 				}
 				
