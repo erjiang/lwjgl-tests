@@ -1,3 +1,4 @@
+package com.ericjiang.threespace;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
